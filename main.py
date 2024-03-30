@@ -1,5 +1,8 @@
 import arcade
 
+from Seed import PeaShooterSeed
+from Seedbank import Seedbank
+
 SCREEN_WIDTH = 900
 SCREEN_HEIGHT = 600
 SCREEN_TITLE = "PVZ"
@@ -18,25 +21,21 @@ class Game(arcade.Window):
             height=self.height,
             x=150
         )
-
+        self.seed_bank = Seedbank()
+        self.seed_bank.top = self.height
+        self.seed_bank.left = 100
         # If you have sprite lists, you should create them here,
         # and set them to None
-
-    def setup(self):
-        """ Set up the game variables. Call to re-start the game. """
-        # Create your sprites and sprite lists here
-        pass
+        self.seed_bank.add(PeaShooterSeed())
+        self.seed_bank.add(PeaShooterSeed())
+        self.seed_bank.add(PeaShooterSeed())
 
     def on_draw(self):
-        """
-        Render the screen.
-        """
-
         # This command should happen before we start drawing. It will clear
         # the screen to the background color, and erase what we drew last frame.
         self.clear()
         arcade.draw_texture_rectangle(self.width / 2, self.height / 2, self.width, self.height, self.background)
-
+        self.seed_bank.on_draw()
         # Call draw() on all your sprite lists below
 
     def on_update(self, delta_time):
@@ -45,7 +44,7 @@ class Game(arcade.Window):
         Normally, you'll call update() on the sprite lists that
         need it.
         """
-        pass
+        self.seed_bank.update_animation(delta_time)
 
     def on_key_press(self, key, key_modifiers):
         """
@@ -83,8 +82,7 @@ class Game(arcade.Window):
 
 def main():
     """ Main function """
-    game = Game(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
-    game.setup()
+    Game(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
     arcade.run()
 
 
