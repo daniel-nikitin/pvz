@@ -1,6 +1,6 @@
 import arcade
 
-from Seed import PeaShooterSeed
+from Seed import Seed
 
 
 class Seedbank(arcade.Sprite):
@@ -9,7 +9,7 @@ class Seedbank(arcade.Sprite):
         self.number_of_suns = 0
         self.seeds = arcade.SpriteList()
 
-    def add(self, seed: PeaShooterSeed):
+    def add(self, seed: Seed):
         self.seeds.append(seed)
 
     def update_animation(self, delta_time: float = 1 / 60):
@@ -20,3 +20,8 @@ class Seedbank(arcade.Sprite):
     def on_draw(self):
         self.draw()
         self.seeds.draw()
+
+    def on_mouse_press(self, x, y):
+        if self.collides_with_point((x, y)):
+            for seed in self.seeds:
+                seed.on_mouse_press(x, y)

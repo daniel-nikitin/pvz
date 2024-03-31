@@ -1,8 +1,10 @@
 import arcade
 
 
-class PeaShooterSeed(arcade.Sprite):
-    def __init__(self):
-        super().__init__(filename="graphics/Cards/card_peashooter.png", scale=0.84)
-        self.cost = 100
-        self.cooldown = 10.0
+class Seed(arcade.Sprite):
+    def __init__(self, filename):
+        super().__init__(filename=filename, scale=0.84)
+
+    def on_mouse_press(self, x, y):
+        if self.collides_with_point((x, y)):
+            print(self)
