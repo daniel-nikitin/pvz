@@ -21,7 +21,7 @@ class Seedbank(arcade.Sprite):
         self.draw()
         self.seeds.draw()
 
-    def on_mouse_press(self, x, y):
+    def on_mouse_press(self, x, y, put_in_hand):
         if self.collides_with_point((x, y)):
             for seed in self.seeds:
-                seed.on_mouse_press(x, y)
+                seed.on_mouse_press(x, y, put_in_hand)

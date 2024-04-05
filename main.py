@@ -1,6 +1,7 @@
 import arcade
 
 from PeaShooterSeed import PeaShooterSeed
+from Plant import Plant
 from Seedbank import Seedbank
 from SunflowerSeed import SunflowerSeed
 
@@ -57,13 +58,16 @@ class Game(arcade.Window):
         self.hand_mouse.center_y = y
 
     def on_mouse_press(self, x, y, button, key_modifiers):
-        self.seed_bank.on_mouse_press(x, y)
+        self.seed_bank.on_mouse_press(x, y, self.put_in_hand)
 
     def on_mouse_release(self, x, y, button, key_modifiers):
         """
         Called when a user releases a mouse button.
         """
         pass
+
+    def put_in_hand(self, plant: Plant):
+        self.hand_mouse = plant
 
 
 def main():
