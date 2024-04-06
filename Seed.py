@@ -11,8 +11,10 @@ class Seed(arcade.Sprite, ABC):
 
     def on_mouse_press(self, x, y, put_in_hand):
         if self.collides_with_point((x, y)):
-            P = self.create_plant()
-            put_in_hand(P)
+            p = self.create_plant()
+            p.center_x = x
+            p.center_y = y
+            put_in_hand(p)
 
     @abstractmethod
     def create_plant(self) -> Plant:

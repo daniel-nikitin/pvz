@@ -33,7 +33,7 @@ class Game(arcade.Window):
         self.seed_bank.add(SunflowerSeed())
         self.seed_bank.add(PeaShooterSeed())
 
-        self.hand_mouse = PeaShooterSeed()
+        self.hand_mouse = None
 
     def on_draw(self):
         # This command should happen before we start drawing. It will clear
@@ -54,8 +54,9 @@ class Game(arcade.Window):
         self.seed_bank.update_animation(delta_time)
 
     def on_mouse_motion(self, x, y, delta_x, delta_y):
-        self.hand_mouse.center_x = x
-        self.hand_mouse.center_y = y
+        if self.hand_mouse is not None:
+            self.hand_mouse.center_x = x
+            self.hand_mouse.center_y = y
 
     def on_mouse_press(self, x, y, button, key_modifiers):
         self.seed_bank.on_mouse_press(x, y, self.put_in_hand)
