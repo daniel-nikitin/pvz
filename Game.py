@@ -46,11 +46,7 @@ class Game(arcade.Window):
         # Call draw() on all your sprite lists below
 
     def on_update(self, delta_time):
-        """
-        All the logic to move, and the game logic goes here.
-        Normally, you'll call update() on the sprite lists that
-        need it.
-        """
+        self.plants.update_animation(delta_time)
         self.seed_bank.update_animation(delta_time)
 
     def on_mouse_motion(self, x, y, delta_x, delta_y):
