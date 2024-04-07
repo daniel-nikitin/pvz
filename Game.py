@@ -1,9 +1,11 @@
 import arcade
 
 from PeaShooterSeed import PeaShooterSeed
-from Plant import Plant
+from PotatoMineSeed import PotatoMineSeed
+from Seed import Seed
 from Seedbank import Seedbank
 from SunflowerSeed import SunflowerSeed
+from hand import Hand
 
 
 class Game(arcade.Window):
@@ -28,9 +30,9 @@ class Game(arcade.Window):
         self.seed_bank.add(PeaShooterSeed())
         self.seed_bank.add(SunflowerSeed())
         self.seed_bank.add(SunflowerSeed())
-        self.seed_bank.add(PeaShooterSeed())
+        self.seed_bank.add(PotatoMineSeed())
 
-        self.hand_mouse = None
+        self.hand = Hand()
 
         self.plants = arcade.SpriteList()
 
@@ -40,8 +42,7 @@ class Game(arcade.Window):
         self.clear()
         arcade.draw_texture_rectangle(self.width / 2, self.height / 2, self.width, self.height, self.background)
         self.seed_bank.on_draw()
-        if self.hand_mouse is not None:
-            self.hand_mouse.draw()
+        self.hand.draw()
         self.plants.draw()
         # Call draw() on all your sprite lists below
 
@@ -50,17 +51,19 @@ class Game(arcade.Window):
         self.seed_bank.update_animation(delta_time)
 
     def on_mouse_motion(self, x, y, delta_x, delta_y):
-        if self.hand_mouse is not None:
-            self.hand_mouse.center_x = x
-            self.hand_mouse.center_y = y
+        self.hand.center_x = x
+        self.hand.center_y = y
 
     def on_mouse_press(self, x, y, button, key_modifiers):
         self.seed_bank.on_mouse_press(x, y, self.put_in_hand)
 
     def on_mouse_release(self, x, y, button, key_modifiers):
-        if self.hand_mouse is not None:
-            self.plants.append(self.hand_mouse)
-            self.hand_mouse = None
+        seed = self.seed_bank.buy(self.hand)
+        if seed is not None:
+            plant = seed.create_plant()
+            plant.center_x = x
+            plant.center_y = y
+            self.plants.append(plant)
 
-    def put_in_hand(self, plant: Plant):
-        self.hand_mouse = plant
+    def put_in_hand(self, seed: Seed):
+        self.hand.take(seed)
