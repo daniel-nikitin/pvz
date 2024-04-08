@@ -4,8 +4,7 @@ from Seed import Seed
 
 class PotatoMineSeed(Seed):
     def __init__(self):
-        super().__init__(filename="graphics/Cards/card_potatomine.png", cost=25)
-        self.cooldown = 10.0
+        super().__init__(filename="graphics/Cards/card_potatomine.png", cost=25, cooldown=10.0)
 
     def create_plant(self):
         return Potatomine()

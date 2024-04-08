@@ -12,11 +12,12 @@ class Seedbank(arcade.Sprite):
 
     def add(self, seed: Seed):
         self.seeds.append(seed)
-
-    def update_animation(self, delta_time: float = 1 / 60):
         for n in range(len(self.seeds)):
             self.seeds[n].left = 75 + self.left + n * 55
             self.seeds[n].top = -5 + self.top
+
+    def update_animation(self, delta_time: float = 1 / 60):
+        self.seeds.update_animation(delta_time)
 
     def on_draw(self):
         self.draw()
@@ -38,4 +39,5 @@ class Seedbank(arcade.Sprite):
         seed = hand.release()
         if seed is not None:
             self.number_of_suns -= seed.cost
+            seed.start_cooldown()
         return seed
