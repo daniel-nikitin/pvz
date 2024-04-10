@@ -22,6 +22,7 @@ class Seedbank(arcade.Sprite):
     def on_draw(self):
         self.draw()
         self.seeds.draw()
+        self.draw_overlay()
         arcade.draw_text(
             text=self.number_of_suns,
             start_x=self.left + 20,
@@ -41,3 +42,15 @@ class Seedbank(arcade.Sprite):
             self.number_of_suns -= seed.cost
             seed.start_cooldown()
         return seed
+
+    def draw_overlay(self):
+        for i in self.seeds:
+            i: Seed
+            arcade.draw_lrtb_rectangle_filled(
+                left=i.left,
+                right=i.right,
+                bottom=i.bottom,
+                top=i.bottom + i.height * i.cool_down(),
+                color=[0, 0, 0, 128]
+
+            )
