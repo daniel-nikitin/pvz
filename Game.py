@@ -1,10 +1,12 @@
 import arcade
 
-from PeaShooterSeed import PeaShooterSeed
-from PotatoMineSeed import PotatoMineSeed
+from Bombcherry import BombcherrySeed
+from PeaShooter import PeaShooterSeed
+from PotatoMine import PotatoMineSeed
 from Seed import Seed
 from Seedbank import Seedbank
-from SunflowerSeed import SunflowerSeed
+from Sunflower import SunflowerSeed
+from chomper import ChomperSeed
 from hand import Hand
 
 
@@ -25,11 +27,10 @@ class Game(arcade.Window):
         self.seed_bank = Seedbank()
         self.seed_bank.top = self.height
         self.seed_bank.left = 100
-        self.seed_bank.add(SunflowerSeed())
+        self.seed_bank.add(ChomperSeed())
         self.seed_bank.add(PeaShooterSeed())
-        self.seed_bank.add(PeaShooterSeed())
         self.seed_bank.add(SunflowerSeed())
-        self.seed_bank.add(SunflowerSeed())
+        self.seed_bank.add(BombcherrySeed())
         self.seed_bank.add(PotatoMineSeed())
 
         self.hand = Hand()
