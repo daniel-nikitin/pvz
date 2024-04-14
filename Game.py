@@ -5,7 +5,7 @@ from PeaShooter import PeaShooterSeed
 from PotatoMine import PotatoMineSeed
 from Seed import Seed
 from Seedbank import Seedbank
-from Sunflower import SunflowerSeed
+from Sunflower import SunflowerSeed, Sunflower
 from chomper import ChomperSeed
 from hand import Hand
 
@@ -50,6 +50,11 @@ class Game(arcade.Window):
     def on_update(self, delta_time):
         self.plants.update_animation(delta_time)
         self.seed_bank.update_animation(delta_time)
+        for i in self.plants:
+            if isinstance(i, Sunflower):
+                i: Sunflower
+                harvested = i.give_all_suns()
+                self.seed_bank.add_suns(harvested)
 
     def on_mouse_motion(self, x, y, delta_x, delta_y):
         self.hand.center_x = x
