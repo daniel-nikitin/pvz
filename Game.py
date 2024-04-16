@@ -5,6 +5,7 @@ from PeaShooter import PeaShooterSeed
 from PotatoMine import PotatoMineSeed
 from Seed import Seed
 from Seedbank import Seedbank
+from Sun import Sun
 from Sunflower import SunflowerSeed, Sunflower
 from chomper import ChomperSeed
 from hand import Hand
@@ -36,6 +37,11 @@ class Game(arcade.Window):
         self.hand = Hand()
 
         self.plants = arcade.SpriteList()
+        self.suns = arcade.SpriteList()
+
+        self.suns.append(Sun(x=100, y=100, target_x=self.seed_bank.left, target_y=self.seed_bank.bottom))
+        self.suns.append(Sun(x=800, y=200, target_x=self.seed_bank.left, target_y=self.seed_bank.bottom))
+        self.suns.append(Sun(x=500, y=500, target_x=self.seed_bank.left, target_y=self.seed_bank.bottom))
 
     def on_draw(self):
         # This command should happen before we start drawing. It will clear
@@ -45,11 +51,13 @@ class Game(arcade.Window):
         self.seed_bank.on_draw()
         self.hand.draw()
         self.plants.draw()
+        self.suns.draw()
         # Call draw() on all your sprite lists below
 
     def on_update(self, delta_time):
         self.plants.update_animation(delta_time)
         self.seed_bank.update_animation(delta_time)
+        self.suns.update_animation(delta_time)
         for i in self.plants:
             if isinstance(i, Sunflower):
                 i: Sunflower
