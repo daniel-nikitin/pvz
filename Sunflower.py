@@ -1,7 +1,7 @@
 from Plant import Plant
 from Seed import Seed
 
-TIMER_SUN = .5
+TIMER_SUN = 5
 
 
 class Sunflower(Plant):
@@ -14,7 +14,7 @@ class Sunflower(Plant):
         super().update_animation(delta_time)
         self.time_left_sun -= delta_time
         if self.time_left_sun <= 0:
-            self.suns += 1
+            self.suns += 100
             self.time_left_sun = TIMER_SUN
 
     def give_all_suns(self):

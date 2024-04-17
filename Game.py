@@ -39,9 +39,9 @@ class Game(arcade.Window):
         self.plants = arcade.SpriteList()
         self.suns = arcade.SpriteList()
 
-        self.suns.append(Sun(x=100, y=100, target_x=self.seed_bank.left, target_y=self.seed_bank.bottom))
-        self.suns.append(Sun(x=800, y=200, target_x=self.seed_bank.left, target_y=self.seed_bank.bottom))
-        self.suns.append(Sun(x=500, y=500, target_x=self.seed_bank.left, target_y=self.seed_bank.bottom))
+    def when_sun_reach_seedbank(self, sun: Sun):
+        self.seed_bank.add_suns(sun.how_many)
+        sun.kill()
 
     def on_draw(self):
         # This command should happen before we start drawing. It will clear
@@ -62,7 +62,15 @@ class Game(arcade.Window):
             if isinstance(i, Sunflower):
                 i: Sunflower
                 harvested = i.give_all_suns()
-                self.seed_bank.add_suns(harvested)
+                if harvested > 0:
+                    self.suns.append(Sun(
+                        x=i.center_x,
+                        y=i.center_y,
+                        target_x=self.seed_bank.left + 45,
+                        target_y=self.seed_bank.bottom + 50,
+                        when_target_reached=self.when_sun_reach_seedbank,
+                        how_many=harvested
+                    ))
 
     def on_mouse_motion(self, x, y, delta_x, delta_y):
         self.hand.center_x = x

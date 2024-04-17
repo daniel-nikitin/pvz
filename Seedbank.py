@@ -26,7 +26,7 @@ class Seedbank(arcade.Sprite):
     def update_suns(self, delta_time):
         self.time_left_sun -= delta_time
         if self.time_left_sun <= 0:
-            self.add_suns(1)
+            # self.add_suns(1)
             self.time_left_sun = TIMER_SUN
 
     def on_draw(self):
