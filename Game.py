@@ -9,6 +9,7 @@ from Sun import Sun
 from Sunflower import SunflowerSeed, Sunflower
 from chomper import ChomperSeed
 from hand import Hand
+from zombieman import Zombie
 
 
 class Game(arcade.Window):
@@ -38,6 +39,15 @@ class Game(arcade.Window):
 
         self.plants = arcade.SpriteList()
         self.suns = arcade.SpriteList()
+        self.zombies = arcade.SpriteList()
+        self.add_zombie()
+
+    def add_zombie(self):
+        zombie = Zombie()
+        zombie.center_x = 1000
+        zombie.center_y = 200
+        zombie.change_x = -1
+        self.zombies.append(zombie)
 
     def when_sun_reach_seedbank(self, sun: Sun):
         self.seed_bank.add_suns(sun.how_many)
@@ -51,6 +61,7 @@ class Game(arcade.Window):
         self.seed_bank.on_draw()
         self.hand.draw()
         self.plants.draw()
+        self.zombies.draw()
         self.suns.draw()
         # Call draw() on all your sprite lists below
 
@@ -58,6 +69,7 @@ class Game(arcade.Window):
         self.plants.update_animation(delta_time)
         self.seed_bank.update_animation(delta_time)
         self.suns.update_animation(delta_time)
+        self.zombies.update_animation(delta_time)
         for i in self.plants:
             if isinstance(i, Sunflower):
                 i: Sunflower
