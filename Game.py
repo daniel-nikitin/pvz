@@ -1,7 +1,7 @@
 import arcade
 
 from Bombcherry import BombcherrySeed
-from PeaShooter import PeaShooterSeed
+from PeaShooter import PeaShooterSeed, PeaShooter, PeashooterBullet
 from PotatoMine import PotatoMineSeed
 from Seed import Seed
 from Seedbank import Seedbank
@@ -39,6 +39,7 @@ class Game(arcade.Window):
 
         self.plants = arcade.SpriteList()
         self.suns = arcade.SpriteList()
+        self.bullets = arcade.SpriteList()
         self.zombies = arcade.SpriteList()
         self.add_zombie()
 
@@ -46,7 +47,6 @@ class Game(arcade.Window):
         zombie = Zombie()
         zombie.center_x = 1000
         zombie.center_y = 200
-        zombie.change_x = -1
         self.zombies.append(zombie)
 
     def when_sun_reach_seedbank(self, sun: Sun):
@@ -60,6 +60,7 @@ class Game(arcade.Window):
         arcade.draw_texture_rectangle(self.width / 2, self.height / 2, self.width, self.height, self.background)
         self.seed_bank.on_draw()
         self.hand.draw()
+        self.bullets.draw()
         self.plants.draw()
         self.zombies.draw()
         self.suns.draw()
@@ -70,6 +71,7 @@ class Game(arcade.Window):
         self.seed_bank.update_animation(delta_time)
         self.suns.update_animation(delta_time)
         self.zombies.update_animation(delta_time)
+        self.bullets.update_animation(delta_time)
         for i in self.plants:
             if isinstance(i, Sunflower):
                 i: Sunflower
@@ -82,6 +84,15 @@ class Game(arcade.Window):
                         target_y=self.seed_bank.bottom + 50,
                         when_target_reached=self.when_sun_reach_seedbank,
                         how_many=harvested
+                    ))
+
+            if isinstance(i, PeaShooter):
+                i: PeaShooter
+                shot = i.shoot_all_bullets()
+                if shot > 0:
+                    self.bullets.append(PeashooterBullet(
+                        x=i.center_x + 20,
+                        y=i.center_y + 20,
                     ))
 
     def on_mouse_motion(self, x, y, delta_x, delta_y):
