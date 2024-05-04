@@ -67,11 +67,13 @@ class Game(arcade.Window):
         # Call draw() on all your sprite lists below
 
     def on_update(self, delta_time):
+        self.check_bullets_collision()
         self.plants.update_animation(delta_time)
         self.seed_bank.update_animation(delta_time)
         self.suns.update_animation(delta_time)
         self.zombies.update_animation(delta_time)
         self.bullets.update_animation(delta_time)
+
         for i in self.plants:
             if isinstance(i, Sunflower):
                 i: Sunflower
@@ -109,6 +111,14 @@ class Game(arcade.Window):
             plant.center_x = x
             plant.center_y = y
             self.plants.append(plant)
+
+    def check_bullets_collision(self):
+        for b in self.bullets:
+            b: PeashooterBullet
+            hits = arcade.check_for_collision_with_list(sprite=b, sprite_list=self.zombies)
+            if len(hits) > 0:
+                zombie = hits[0]
+                b.explode()
 
     def put_in_hand(self, seed: Seed):
         self.hand.take(seed)
