@@ -115,10 +115,13 @@ class Game(arcade.Window):
     def check_bullets_collision(self):
         for b in self.bullets:
             b: PeashooterBullet
-            hits = arcade.check_for_collision_with_list(sprite=b, sprite_list=self.zombies)
-            if len(hits) > 0:
-                zombie = hits[0]
-                b.explode()
+            if not b.exploded:
+                hits = arcade.check_for_collision_with_list(sprite=b, sprite_list=self.zombies)
+                if len(hits) > 0:
+                    zombie = hits[0]
+                    zombie: Zombie
+                    b.explode()
+                    zombie.hurt(20)
 
     def put_in_hand(self, seed: Seed):
         self.hand.take(seed)
