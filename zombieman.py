@@ -2,10 +2,14 @@ from AnimatedSprite import AnimatedSprite
 
 
 class Zombie(AnimatedSprite):
-    def __init__(self):
-        super().__init__(base_filename="graphics/Zombies/NormalZombie/Zombie/Zombie", number_of_textures=22)
+    def __init__(self,
+                 base_filename,
+                 number_of_textures,
+                 health
+                 ):
+        super().__init__(base_filename=base_filename, number_of_textures=number_of_textures)
         self.change_x = -1
-        self.health = 100
+        self.health = health
         self.hurting = False
         self.reset_timer()
         self.initial_color = self.color
@@ -32,3 +36,30 @@ class Zombie(AnimatedSprite):
 
     def reset_timer(self):
         self.timer = 0.2
+
+
+class BucketheadZombie(Zombie):
+    def __init__(self):
+        super().__init__(
+            base_filename="graphics/Zombies/BucketheadZombie/BucketheadZombie/BucketheadZombie",
+            number_of_textures=15,
+            health=200
+        )
+
+
+class ConeheadZombie(Zombie):
+    def __init__(self):
+        super().__init__(
+            base_filename="graphics/Zombies/ConeheadZombie/ConeheadZombie/ConeheadZombie",
+            number_of_textures=21,
+            health=105
+        )
+
+
+class NormalZombie(Zombie):
+    def __init__(self):
+        super().__init__(
+            base_filename="graphics/Zombies/NormalZombie/Zombie/Zombie",
+            number_of_textures=22,
+            health=100
+        )

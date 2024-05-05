@@ -9,7 +9,7 @@ TIMER_SUN = 1.5
 class Seedbank(arcade.Sprite):
     def __init__(self):
         super().__init__(filename="graphics/Screen/SeedBank.png")
-        self.number_of_suns = 100
+        self.number_of_suns = 1000
         self.seeds = arcade.SpriteList()
         self.time_left_sun = TIMER_SUN
 

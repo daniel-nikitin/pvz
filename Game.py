@@ -1,3 +1,5 @@
+import random
+
 import arcade
 
 from Bombcherry import BombcherrySeed
@@ -9,7 +11,7 @@ from Sun import Sun
 from Sunflower import SunflowerSeed, Sunflower
 from chomper import ChomperSeed
 from hand import Hand
-from zombieman import Zombie
+from zombieman import Zombie, BucketheadZombie, ConeheadZombie, NormalZombie
 
 
 class Game(arcade.Window):
@@ -41,13 +43,16 @@ class Game(arcade.Window):
         self.suns = arcade.SpriteList()
         self.bullets = arcade.SpriteList()
         self.zombies = arcade.SpriteList()
-        self.add_zombie()
+        self.add_zombies(10)
 
-    def add_zombie(self):
-        zombie = Zombie()
-        zombie.center_x = 1000
-        zombie.center_y = 200
-        self.zombies.append(zombie)
+    def add_zombies(self, number_of_zombie):
+        typesofzombies = [BucketheadZombie, ConeheadZombie, NormalZombie]
+        for i in range(number_of_zombie):
+            zombietype = random.choice(typesofzombies)
+            zombie = zombietype()
+            zombie.center_x = 1000
+            zombie.center_y = random.randint(41, 521)
+            self.zombies.append(zombie)
 
     def when_sun_reach_seedbank(self, sun: Sun):
         self.seed_bank.add_suns(sun.how_many)
@@ -103,6 +108,7 @@ class Game(arcade.Window):
 
     def on_mouse_press(self, x, y, button, key_modifiers):
         self.seed_bank.on_mouse_press(x, y, self.put_in_hand)
+        print(y)
 
     def on_mouse_release(self, x, y, button, key_modifiers):
         seed = self.seed_bank.buy(self.hand)
