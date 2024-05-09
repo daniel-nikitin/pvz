@@ -9,7 +9,11 @@ TIMER_BULLET = 2
 
 class PeaShooter(Plant):
     def __init__(self):
-        super().__init__(base_filename="graphics/Plants/Peashooter/Peashooter", number_of_textures=13)
+        super().__init__(
+            base_filename="graphics/Plants/Peashooter/Peashooter",
+            number_of_textures=13,
+            health=50
+        )
         self.cooldown_time = TIMER_BULLET
         self.bullets = 0
 

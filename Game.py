@@ -4,6 +4,7 @@ import arcade
 
 from Bombcherry import BombcherrySeed
 from PeaShooter import PeaShooterSeed, PeaShooter, PeashooterBullet
+from Plant import Plant
 from PotatoMine import PotatoMineSeed
 from Seed import Seed
 from Seedbank import Seedbank
@@ -73,6 +74,7 @@ class Game(arcade.Window):
 
     def on_update(self, delta_time):
         self.check_bullets_collision()
+        self.check_plants_with_zombie_collision()
         self.plants.update_animation(delta_time)
         self.seed_bank.update_animation(delta_time)
         self.suns.update_animation(delta_time)
@@ -108,7 +110,6 @@ class Game(arcade.Window):
 
     def on_mouse_press(self, x, y, button, key_modifiers):
         self.seed_bank.on_mouse_press(x, y, self.put_in_hand)
-        print(y)
 
     def on_mouse_release(self, x, y, button, key_modifiers):
         seed = self.seed_bank.buy(self.hand)
@@ -128,6 +129,17 @@ class Game(arcade.Window):
                     zombie: Zombie
                     b.explode()
                     zombie.hurt(20)
+
+    def check_plants_with_zombie_collision(self):
+        for p in self.plants:
+            p: Plant
+            hits = arcade.check_for_collision_with_list(sprite=p, sprite_list=self.zombies)
+            if len(hits) > 0:
+                zombie = hits[0]
+                zombie: Zombie
+                zombie.stop()
+                damage = zombie.attack()
+                p.hurt(damage)
 
     def put_in_hand(self, seed: Seed):
         self.hand.take(seed)

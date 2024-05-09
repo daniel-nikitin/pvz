@@ -4,7 +4,11 @@ from Seed import Seed
 
 class Chomper(Plant):
     def __init__(self):
-        super().__init__(base_filename="graphics/Plants/Chomper/Chomper/Chomper", number_of_textures=13)
+        super().__init__(
+            base_filename="graphics/Plants/Chomper/Chomper/Chomper",
+            number_of_textures=13,
+            health=100
+        )
 
 
 class ChomperSeed(Seed):

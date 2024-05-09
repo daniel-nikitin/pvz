@@ -6,7 +6,12 @@ TIMER_SUN = 5
 
 class Sunflower(Plant):
     def __init__(self):
-        super().__init__(base_filename="graphics/Plants/SunFlower/SunFlower", number_of_textures=18)
+        super().__init__(
+            base_filename="graphics/Plants/SunFlower/SunFlower",
+            number_of_textures=18,
+            health=5
+        )
+
         self.time_left_sun = TIMER_SUN
         self.suns = 0
 

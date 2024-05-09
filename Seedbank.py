@@ -9,7 +9,7 @@ TIMER_SUN = 1.5
 class Seedbank(arcade.Sprite):
     def __init__(self):
         super().__init__(filename="graphics/Screen/SeedBank.png")
-        self.number_of_suns = 1000
+        self.number_of_suns = 100
         self.seeds = arcade.SpriteList()
         self.time_left_sun = TIMER_SUN
 
@@ -44,7 +44,8 @@ class Seedbank(arcade.Sprite):
         if self.collides_with_point((x, y)):
             for s in self.seeds:
                 s: Seed
-                s.on_mouse_press(x, y, put_in_hand)
+                if s.cost <= self.number_of_suns:
+                    s.on_mouse_press(x, y, put_in_hand)
 
     def buy(self, hand: Hand) -> Seed:
         seed = hand.release()
@@ -61,11 +62,18 @@ class Seedbank(arcade.Sprite):
     def draw_overlay(self):
         for i in self.seeds:
             i: Seed
+            if i.cost > self.number_of_suns:
+                arcade.draw_lrtb_rectangle_filled(
+                    left=i.left,
+                    right=i.right,
+                    bottom=i.bottom,
+                    top=i.bottom + i.height,
+                    color=[0, 0, 0, 128]
+                )
             arcade.draw_lrtb_rectangle_filled(
                 left=i.left,
                 right=i.right,
                 bottom=i.bottom,
                 top=i.bottom + i.height * i.cool_down(),
                 color=[0, 0, 0, 128]
-
             )
