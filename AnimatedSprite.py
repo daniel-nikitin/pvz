@@ -18,6 +18,6 @@ class AnimatedSprite(arcade.Sprite):
         if self.time > ANIMATION_CYCLE_DURATION / self.number_of_textures:
             self.time = 0.0
             self.cur_texture_index += 1
-            if self.cur_texture_index > self.number_of_textures - 1:
+            if self.cur_texture_index > len(self.textures) - 1:
                 self.cur_texture_index = 0
             self.texture = self.textures[self.cur_texture_index]

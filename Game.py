@@ -131,15 +131,16 @@ class Game(arcade.Window):
                     zombie.hurt(20)
 
     def check_plants_with_zombie_collision(self):
-        for p in self.plants:
-            p: Plant
-            hits = arcade.check_for_collision_with_list(sprite=p, sprite_list=self.zombies)
+        for z in self.zombies:
+            z: Zombie
+            hits = arcade.check_for_collision_with_list(sprite=z, sprite_list=self.plants)
             if len(hits) > 0:
-                zombie = hits[0]
-                zombie: Zombie
-                zombie.stop()
-                damage = zombie.attack()
+                p = hits[0]
+                p: Plant
+                damage = z.attack()
                 p.hurt(damage)
+            else:
+                z.walk()
 
     def put_in_hand(self, seed: Seed):
         self.hand.take(seed)
